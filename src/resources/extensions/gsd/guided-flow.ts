@@ -65,7 +65,9 @@ export function checkAutoStartAfterDiscuss(): boolean {
   } catch { /* non-fatal — stale draft doesn't break anything, CONTEXT.md wins */ }
 
   pendingAutoStart = null;
-  startAuto(ctx, pi, basePath, false, { step }).catch(() => {});
+  startAuto(ctx, pi, basePath, false, { step }).catch((err) => {
+    if (process.env.GSD_DEBUG) console.error('[gsd] auto start error:', err);
+  });
   return true;
 }
 
