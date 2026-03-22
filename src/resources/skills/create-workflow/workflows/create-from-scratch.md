@@ -3,9 +3,9 @@ Guide the user through creating a workflow definition from scratch. Follow these
 
 <required_reading>
 Before starting, read these references so you can answer schema questions accurately:
-- `references/yaml-schema-v1.md` — all fields, types, and constraints
-- `references/verification-policies.md` — the four verify policies
-- `references/feature-patterns.md` — context_from, iterate, params patterns
+- `../references/yaml-schema-v1.md` — all fields, types, and constraints
+- `../references/verification-policies.md` — the four verify policies
+- `../references/feature-patterns.md` — context_from, iterate, params patterns
 </required_reading>
 
 <phase name="purpose">
@@ -37,7 +37,7 @@ For each step, ask:
   - **Have an LLM review the output** → `prompt-verify` (ask for the verification prompt)
   - **Require human approval** → `human-review`
 
-Refer to `references/verification-policies.md` for the exact YAML structure of each policy.
+Refer to `../references/verification-policies.md` for the exact YAML structure of each policy.
 </phase>
 
 <phase name="context_chaining">
@@ -67,7 +67,7 @@ If yes:
 - Identify the source artifact (the list to iterate over).
 - Define the `pattern` regex with a capture group to extract each item.
 - Set `iterate.source` and `iterate.pattern` on the step.
-- Refer to `references/feature-patterns.md` for examples.
+- Refer to `../references/feature-patterns.md` for examples.
 </phase>
 
 <phase name="assemble">

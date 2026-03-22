@@ -3,9 +3,9 @@ Guide the user through creating a workflow definition by customizing an existing
 
 <required_reading>
 Before starting, read these references for schema details:
-- `references/yaml-schema-v1.md` — all fields, types, and constraints
-- `references/verification-policies.md` — the four verify policies
-- `references/feature-patterns.md` — context_from, iterate, params patterns
+- `../references/yaml-schema-v1.md` — all fields, types, and constraints
+- `../references/verification-policies.md` — the four verify policies
+- `../references/feature-patterns.md` — context_from, iterate, params patterns
 </required_reading>
 
 <phase name="choose_template">
