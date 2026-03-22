@@ -202,6 +202,98 @@ export const SKILL_CATALOG: SkillPack[] = [
     skills: ["frontend-design"],
     matchLanguages: ["javascript/typescript"],
   },
+  // ── Angular ───────────────────────────────────────────────────────────────
+  {
+    label: "Angular",
+    description: "Angular components, signals, forms, routing, and testing",
+    repo: "analogjs/angular-skills",
+    skills: [
+      "angular-component",
+      "angular-signals",
+      "angular-forms",
+      "angular-routing",
+      "angular-testing",
+    ],
+    matchFiles: ["angular.json"],
+  },
+  // ── Vue.js / Nuxt ────────────────────────────────────────────────────────
+  {
+    label: "Vue.js",
+    description: "Vue best practices, Pinia state, Vue Router, and testing",
+    repo: "vuejs-ai/skills",
+    skills: [
+      "vue-best-practices",
+      "vue-pinia-best-practices",
+      "vue-router-best-practices",
+      "vue-testing-best-practices",
+    ],
+    matchFiles: ["nuxt.config.ts", "nuxt.config.js"],
+  },
+  // ── Svelte / SvelteKit ────────────────────────────────────────────────────
+  {
+    label: "Svelte",
+    description: "Svelte code patterns and SvelteKit best practices",
+    repo: "sveltejs/ai-tools",
+    skills: ["svelte-code-writer", "svelte-core-bestpractices"],
+    matchFiles: ["svelte.config.js", "svelte.config.ts"],
+  },
+  // ── Next.js ───────────────────────────────────────────────────────────────
+  {
+    label: "Next.js",
+    description: "Next.js app router, server components, and deployment patterns",
+    repo: "vercel-labs/vercel-plugin",
+    skills: ["nextjs"],
+    matchFiles: ["next.config.js", "next.config.ts", "next.config.mjs"],
+  },
+  // ── Java / Spring Boot ────────────────────────────────────────────────────
+  {
+    label: "Java & Spring Boot",
+    description: "Spring Boot best practices, DI, RESTful APIs, JPA, testing, and security",
+    repo: "github/awesome-copilot",
+    skills: ["java-springboot"],
+    matchLanguages: ["java", "java/kotlin"],
+    matchFiles: ["pom.xml", "build.gradle", "build.gradle.kts"],
+  },
+  // ── .NET / C# ────────────────────────────────────────────────────────────
+  {
+    label: ".NET & C#",
+    description: ".NET best practices, design patterns, and upgrade guidance",
+    repo: "github/awesome-copilot",
+    skills: ["dotnet-best-practices", "dotnet-design-pattern-review"],
+    matchLanguages: ["csharp"],
+    matchFiles: ["*.csproj"],
+  },
+  // ── Flutter / Dart ────────────────────────────────────────────────────────
+  {
+    label: "Flutter",
+    description: "Flutter layouts, architecture, state management, and testing",
+    repo: "flutter/skills",
+    skills: [
+      "flutter-building-layouts",
+      "flutter-architecting-apps",
+      "flutter-managing-state",
+      "flutter-testing-apps",
+    ],
+    matchLanguages: ["dart/flutter"],
+    matchFiles: ["pubspec.yaml"],
+  },
+  // ── PHP / Laravel ─────────────────────────────────────────────────────────
+  {
+    label: "PHP & Laravel",
+    description: "Laravel patterns, PHP best practices, and testing",
+    repo: "jeffallan/claude-skills",
+    skills: ["laravel-specialist", "php-pro"],
+    matchLanguages: ["php"],
+    matchFiles: ["composer.json"],
+  },
+  // ── Django ────────────────────────────────────────────────────────────────
+  {
+    label: "Django",
+    description: "Django expert patterns, models, views, and middleware",
+    repo: "vintasoftware/django-ai-plugins",
+    skills: ["django-expert"],
+    matchFiles: ["manage.py"],
+  },
   // ── Rust ──────────────────────────────────────────────────────────────────
   {
     label: "Rust",
@@ -302,6 +394,22 @@ export const SKILL_CATALOG: SkillPack[] = [
     repo: "awslabs/agent-plugins",
     skills: ["deploy", "aws-lambda", "aws-serverless-deployment"],
     matchFiles: ["cdk.json", "samconfig.toml", "serverless.yml", "serverless.yaml"],
+  },
+  // ── Container / DevOps ─────────────────────────────────────────────────────
+  {
+    label: "Docker",
+    description: "Multi-stage Dockerfiles, layer optimization, and security hardening",
+    repo: "github/awesome-copilot",
+    skills: ["multi-stage-dockerfile"],
+    matchFiles: ["Dockerfile", "docker-compose.yml", "docker-compose.yaml"],
+  },
+  // ── Infrastructure as Code ─────────────────────────────────────────────────
+  {
+    label: "Terraform",
+    description: "Terraform style guide, testing, and stack patterns",
+    repo: "hashicorp/agent-skills",
+    skills: ["terraform-style-guide", "terraform-test", "terraform-stacks"],
+    matchFiles: ["main.tf"],
   },
   // ── Essential (all projects) ────────────────────────────────────────────
   {
@@ -426,6 +534,60 @@ export const GREENFIELD_STACKS: Array<{
     label: "Azure",
     description: "Azure deployment, AI, storage, diagnostics",
     packs: ["Azure"],
+  },
+  {
+    id: "angular",
+    label: "Angular",
+    description: "Angular components, signals, forms, routing",
+    packs: ["Angular", "Frontend Design & UX"],
+  },
+  {
+    id: "vue",
+    label: "Vue.js / Nuxt",
+    description: "Vue.js with Pinia, Vue Router, and testing",
+    packs: ["Vue.js", "Frontend Design & UX"],
+  },
+  {
+    id: "svelte",
+    label: "Svelte / SvelteKit",
+    description: "Svelte 5 and SvelteKit patterns",
+    packs: ["Svelte", "Frontend Design & UX"],
+  },
+  {
+    id: "nextjs",
+    label: "Next.js",
+    description: "Next.js app router, React, and Vercel deployment",
+    packs: ["Next.js", "React & Web Frontend", "shadcn/ui"],
+  },
+  {
+    id: "flutter",
+    label: "Flutter",
+    description: "Cross-platform Flutter/Dart development",
+    packs: ["Flutter"],
+  },
+  {
+    id: "java",
+    label: "Java / Spring Boot",
+    description: "Spring Boot APIs, JPA, and testing",
+    packs: ["Java & Spring Boot"],
+  },
+  {
+    id: "dotnet",
+    label: ".NET / C#",
+    description: "ASP.NET Core, Entity Framework, and design patterns",
+    packs: [".NET & C#"],
+  },
+  {
+    id: "php",
+    label: "PHP / Laravel",
+    description: "Laravel patterns and PHP best practices",
+    packs: ["PHP & Laravel"],
+  },
+  {
+    id: "django",
+    label: "Django",
+    description: "Django models, views, middleware, and Celery",
+    packs: ["Django", "Python"],
   },
   {
     id: "other",

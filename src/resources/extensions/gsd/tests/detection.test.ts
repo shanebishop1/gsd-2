@@ -441,3 +441,97 @@ test("detectProjectSignals: no SQLite markers without matching files", () => {
     cleanup(dir);
   }
 });
+
+test("detectProjectSignals: .NET project via .csproj extension", () => {
+  const dir = makeTempDir("signals-dotnet");
+  try {
+    writeFileSync(join(dir, "MyApp.csproj"), "<Project></Project>", "utf-8");
+    const signals = detectProjectSignals(dir);
+    assert.ok(signals.detectedFiles.includes("*.csproj"), "should add synthetic *.csproj marker");
+    assert.equal(signals.primaryLanguage, "csharp");
+  } finally {
+    cleanup(dir);
+  }
+});
+
+test("detectProjectSignals: .NET project via .sln extension", () => {
+  const dir = makeTempDir("signals-sln");
+  try {
+    writeFileSync(join(dir, "MyApp.sln"), "", "utf-8");
+    const signals = detectProjectSignals(dir);
+    assert.ok(signals.detectedFiles.includes("*.csproj"), "should add synthetic *.csproj marker for .sln files");
+  } finally {
+    cleanup(dir);
+  }
+});
+
+test("detectProjectSignals: Angular project via angular.json", () => {
+  const dir = makeTempDir("signals-angular");
+  try {
+    writeFileSync(join(dir, "angular.json"), "{}", "utf-8");
+    writeFileSync(join(dir, "package.json"), "{}", "utf-8");
+    const signals = detectProjectSignals(dir);
+    assert.ok(signals.detectedFiles.includes("angular.json"));
+    assert.equal(signals.primaryLanguage, "javascript/typescript");
+  } finally {
+    cleanup(dir);
+  }
+});
+
+test("detectProjectSignals: Next.js project via next.config.ts", () => {
+  const dir = makeTempDir("signals-nextjs");
+  try {
+    writeFileSync(join(dir, "next.config.ts"), "export default {}", "utf-8");
+    writeFileSync(join(dir, "package.json"), "{}", "utf-8");
+    const signals = detectProjectSignals(dir);
+    assert.ok(signals.detectedFiles.includes("next.config.ts"));
+  } finally {
+    cleanup(dir);
+  }
+});
+
+test("detectProjectSignals: Flutter project via pubspec.yaml", () => {
+  const dir = makeTempDir("signals-flutter");
+  try {
+    writeFileSync(join(dir, "pubspec.yaml"), "name: my_app", "utf-8");
+    const signals = detectProjectSignals(dir);
+    assert.ok(signals.detectedFiles.includes("pubspec.yaml"));
+    assert.equal(signals.primaryLanguage, "dart/flutter");
+  } finally {
+    cleanup(dir);
+  }
+});
+
+test("detectProjectSignals: Django project via manage.py", () => {
+  const dir = makeTempDir("signals-django");
+  try {
+    writeFileSync(join(dir, "manage.py"), "#!/usr/bin/env python", "utf-8");
+    const signals = detectProjectSignals(dir);
+    assert.ok(signals.detectedFiles.includes("manage.py"));
+    assert.equal(signals.primaryLanguage, "python");
+  } finally {
+    cleanup(dir);
+  }
+});
+
+test("detectProjectSignals: Docker project via Dockerfile", () => {
+  const dir = makeTempDir("signals-docker");
+  try {
+    writeFileSync(join(dir, "Dockerfile"), "FROM node:18", "utf-8");
+    const signals = detectProjectSignals(dir);
+    assert.ok(signals.detectedFiles.includes("Dockerfile"));
+  } finally {
+    cleanup(dir);
+  }
+});
+
+test("detectProjectSignals: Terraform project via main.tf", () => {
+  const dir = makeTempDir("signals-terraform");
+  try {
+    writeFileSync(join(dir, "main.tf"), 'provider "aws" {}', "utf-8");
+    const signals = detectProjectSignals(dir);
+    assert.ok(signals.detectedFiles.includes("main.tf"));
+  } finally {
+    cleanup(dir);
+  }
+});

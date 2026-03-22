@@ -109,6 +109,24 @@ export const PROJECT_FILES = [
   "metro.config.js",
   "metro.config.ts",
   "react-native.config.js",
+  // Frontend framework config files
+  "angular.json",
+  "next.config.js",
+  "next.config.ts",
+  "next.config.mjs",
+  "nuxt.config.ts",
+  "nuxt.config.js",
+  "svelte.config.js",
+  "svelte.config.ts",
+  // Container / DevOps config files
+  "Dockerfile",
+  "docker-compose.yml",
+  "docker-compose.yaml",
+  // Infrastructure as Code
+  "main.tf",
+  // Python framework markers
+  "manage.py",
+  "requirements.txt",
 ] as const;
 
 /** File extensions that indicate SQLite databases in the project. */
@@ -116,6 +134,9 @@ const SQLITE_EXTENSIONS = [".sqlite", ".sqlite3", ".db"] as const;
 
 /** File extensions that indicate SQL usage (migrations, schemas, seeds). */
 const SQL_EXTENSIONS = [".sql"] as const;
+
+/** File extensions that indicate .NET / C# projects. */
+const DOTNET_EXTENSIONS = [".csproj", ".sln", ".fsproj"] as const;
 
 const LANGUAGE_MAP: Record<string, string> = {
   "package.json": "javascript/typescript",
@@ -134,6 +155,8 @@ const LANGUAGE_MAP: Record<string, string> = {
   "mix.exs": "elixir",
   "deno.json": "typescript/deno",
   "deno.jsonc": "typescript/deno",
+  "manage.py": "python",
+  "requirements.txt": "python",
 };
 
 const MONOREPO_MARKERS = [
@@ -289,9 +312,9 @@ export function detectProjectSignals(basePath: string): ProjectSignals {
     }
   }
 
-  // SQLite / SQL file detection — scan root entries for database file extensions.
-  // Adds synthetic markers (e.g. "*.sqlite", "*.sql") to detectedFiles so
-  // skill catalog matchFiles can reference them.
+  // SQLite / SQL / .NET file detection — scan root entries for file extensions.
+  // Adds synthetic markers (e.g. "*.sqlite", "*.sql", "*.csproj") to detectedFiles
+  // so skill catalog matchFiles can reference them.
   try {
     const rootEntries = readdirSync(basePath);
     if (rootEntries.some((e) => SQLITE_EXTENSIONS.some((ext) => e.endsWith(ext)))) {
@@ -299,6 +322,10 @@ export function detectProjectSignals(basePath: string): ProjectSignals {
     }
     if (rootEntries.some((e) => SQL_EXTENSIONS.some((ext) => e.endsWith(ext)))) {
       detectedFiles.push("*.sql");
+    }
+    if (rootEntries.some((e) => DOTNET_EXTENSIONS.some((ext) => e.endsWith(ext)))) {
+      detectedFiles.push("*.csproj");
+      if (!primaryLanguage) primaryLanguage = "csharp";
     }
   } catch {
     // unreadable root — skip extension scan
