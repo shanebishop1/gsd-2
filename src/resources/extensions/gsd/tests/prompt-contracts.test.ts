@@ -130,9 +130,29 @@ test("complete-slice prompt still contains template variables for context", () =
   assert.match(prompt, /\{\{roadmapPath\}\}/);
 });
 
-test("reactive-execute prompt references tool calls instead of checkbox updates", () => {
-  const prompt = readPrompt("reactive-execute");
-  assert.doesNotMatch(prompt, /checkbox updates/);
-  assert.doesNotMatch(prompt, /checkbox edits/);
-  assert.match(prompt, /completion tool calls/);
+test("plan-milestone prompt references DB-backed planning tool and explicitly forbids manual roadmap writes", () => {
+  const prompt = readPrompt("plan-milestone");
+  assert.match(prompt, /gsd_plan_milestone/);
+  assert.match(prompt, /Do \*\*not\*\* write `?\{\{outputPath\}\}`?, `?ROADMAP\.md`?, or other planning artifacts manually/i);
+});
+
+test("guided-plan-milestone prompt references DB-backed planning tool and explicitly forbids manual roadmap writes", () => {
+  const prompt = readPrompt("guided-plan-milestone");
+  assert.match(prompt, /gsd_plan_milestone/);
+  assert.match(prompt, /Do \*\*not\*\* write `?\{\{milestoneId\}\}-ROADMAP\.md`?, `?ROADMAP\.md`?, or other planning artifacts manually/i);
+});
+
+test("plan-slice prompt no longer frames direct PLAN writes as the source of truth", () => {
+  const prompt = readPrompt("plan-slice");
+  assert.match(prompt, /Do \*\*not\*\* rely on direct `PLAN\.md` writes as the source of truth/i);
+});
+
+test("replan-slice prompt requires DB-backed planning state when available", () => {
+  const prompt = readPrompt("replan-slice");
+  assert.match(prompt, /DB-backed planning tool exists for this phase, use it as the source of truth/i);
+});
+
+test("reassess-roadmap prompt forbids roadmap-only manual edits when tool path exists", () => {
+  const prompt = readPrompt("reassess-roadmap");
+  assert.match(prompt, /Do \*\*not\*\* bypass state with manual roadmap-only edits/i);
 });

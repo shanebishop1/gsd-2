@@ -65,7 +65,8 @@ Then:
    - Observability Impact section **only if the task touches runtime boundaries, async flows, or error paths** — omit it otherwise
 6. Write `{{outputPath}}`
 7. Write individual task plans in `{{slicePath}}/tasks/`: `T01-PLAN.md`, `T02-PLAN.md`, etc.
-8. **Self-audit the plan.** Walk through each check — if any fail, fix the plan files before moving on:
+8. If the tool path for this planning phase is available, call it to persist the slice planning state before finishing. Do **not** rely on direct `PLAN.md` writes as the source of truth; any plan file you write must reflect tool-backed state rather than bypass it.
+9. **Self-audit the plan.** Walk through each check — if any fail, fix the plan files before moving on:
     - **Completion semantics:** If every task were completed exactly as written, the slice goal/demo should actually be true.
     - **Requirement coverage:** Every must-have in the slice maps to at least one task. No must-have is orphaned. If `REQUIREMENTS.md` exists, every Active requirement this slice owns maps to at least one task.
     - **Task completeness:** Every task has steps, must-haves, verification, inputs, and expected output — none are blank or vague. Inputs and Expected Output list backtick-wrapped file paths, not prose descriptions.
