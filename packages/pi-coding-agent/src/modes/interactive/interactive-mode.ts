@@ -1989,6 +1989,7 @@ export class InteractiveMode {
 			handleDebugCommand: () => this.handleDebugCommand(),
 			shutdown: () => this.shutdown(),
 			executeCompaction: (instructions, isAuto) => this.executeCompaction(instructions, isAuto),
+			handleBashCommand: (command, options) => this.handleBashCommand(command, options?.excludeFromContext, options?.displayCommand, options?.loginShell),
 		};
 	}
 
@@ -3647,8 +3648,9 @@ export class InteractiveMode {
 		}
 	}
 
-	private async handleBashCommand(command: string, excludeFromContext = false): Promise<void> {
+	private async handleBashCommand(command: string, excludeFromContext = false, displayCommand?: string, loginShell?: boolean): Promise<void> {
 		const extensionRunner = this.session.extensionRunner;
+		const label = displayCommand || command;
 
 		// Emit user_bash event to let extensions intercept
 		const eventResult = extensionRunner
@@ -3665,7 +3667,7 @@ export class InteractiveMode {
 			const result = eventResult.result;
 
 			// Create UI component for display
-			this.bashComponent = new BashExecutionComponent(command, this.ui, excludeFromContext);
+			this.bashComponent = new BashExecutionComponent(label, this.ui, excludeFromContext);
 			if (this.session.isStreaming) {
 				this.pendingMessagesContainer.addChild(this.bashComponent);
 				this.pendingBashComponents.push(this.bashComponent);
@@ -3693,7 +3695,7 @@ export class InteractiveMode {
 
 		// Normal execution path (possibly with custom operations)
 		const isDeferred = this.session.isStreaming;
-		this.bashComponent = new BashExecutionComponent(command, this.ui, excludeFromContext);
+		this.bashComponent = new BashExecutionComponent(label, this.ui, excludeFromContext);
 
 		if (isDeferred) {
 			// Show in pending area when agent is streaming
@@ -3714,7 +3716,7 @@ export class InteractiveMode {
 						this.ui.requestRender();
 					}
 				},
-				{ excludeFromContext, operations: eventResult?.operations },
+				{ excludeFromContext, operations: eventResult?.operations, loginShell },
 			);
 
 			if (this.bashComponent) {
